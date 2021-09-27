@@ -2,7 +2,6 @@ package api
 
 import (
 	"bufio"
-	"bytes"
 	"context"
 	"fmt"
 	"io"
@@ -602,6 +601,7 @@ func (a *Agent) AgentHealthServiceByIDOpts(serviceID string, q *QueryOptions) (s
 	r.setQueryOptions(q)
 	r.params.Add("format", "json")
 	r.header.Set("Accept", "application/json")
+	// not a lot of value in wrapping the doRequest call in a requireHttpCodes call
 	_, resp, err := a.c.doRequest(r)
 	if err != nil {
 		return "", nil, err
@@ -641,6 +641,7 @@ func (a *Agent) AgentHealthServiceByNameOpts(service string, q *QueryOptions) (s
 	r.setQueryOptions(q)
 	r.params.Add("format", "json")
 	r.header.Set("Accept", "application/json")
+	// not a lot of value in wrapping the doRequest call in a requireHttpCodes call
 	_, resp, err := a.c.doRequest(r)
 	if err != nil {
 		return "", nil, err
@@ -1237,15 +1238,15 @@ func (a *Agent) updateTokenOnce(target, token string, q *WriteOptions) (*WriteMe
 	if err != nil {
 		return nil, 0, err
 	}
-	defer closeResponseBody(resp)
 
 	wm := &WriteMeta{RequestTime: rtt}
 
-	if resp.StatusCode != 200 {
-		var buf bytes.Buffer
-		io.Copy(&buf, resp.Body)
-		return wm, resp.StatusCode, fmt.Errorf("Unexpected response code: %d (%s)", resp.StatusCode, buf.Bytes())
+	_, _, err = requireOK(rtt, resp, err)
+
+	if err != nil {
+		return wm, resp.StatusCode, err
 	}
+	defer closeResponseBody(resp)
 
 	return wm, resp.StatusCode, nil
 }
