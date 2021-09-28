@@ -336,7 +336,7 @@ driver "terraform-cloud" {
   - `key` - (string) The client key file to use for talking to Terraform Enterprise over TLS.
   - `ca_cert` - (string) The CA file to use for talking to Terraform Enterprise over TLS.
   - `ca_path` - (string) The path to a directory of CA certs to use for talking to Terraform Enterprise over TLS.
-  - `cert` - (string) The client cert file to use for talking to Terraform Enterprise over TLS.
+  - `cert` - (string) The client certificate file to use for communicating with Terraform Enterprise over TLS.
   - `server_name` - (string) The server name to use as the SNI host when connecting via TLS.
 
 Consul-Terraform-Sync generates local artifacts to prepare configuration versions used for workspace runs. The location of the files created can be set with the [`working_dir`](/docs/nia/configuration#working_dir) option or configured per task. When a task is configured with a local module and is run with the Terraform Cloud driver, the local module is copied and uploaded as a part of the configuration version.
