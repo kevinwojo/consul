@@ -334,7 +334,7 @@ driver "terraform-cloud" {
   - `enabled` - (bool) Enable TLS. Specifying any option for TLS will also enable it.
   - `verify` - (bool: true) Enables TLS peer verification. The default is enabled, which will check the global CA chain to make sure the given certificates are valid. If you are using a self-signed certificate that you have not added to the CA chain, you may want to disable SSL verification. However, please understand this is a potential security vulnerability.
   - `key` - (string) The client key file to use for talking to Terraform Enterprise over TLS.
-  - `ca_cert` - (string) The CA file to use for talking to Terraform Enterprise over TLS.
+  - `ca_cert` - (string) The CA file to use for communicating with Terraform Enterprise over TLS.
   - `ca_path` - (string) The path to a directory of CA certificates to use for communicating with Terraform Enterprise over TLS.
   - `cert` - (string) The client certificate file to use for communicating with Terraform Enterprise over TLS.
   - `server_name` - (string) The server name to use as the SNI host when connecting via TLS.
